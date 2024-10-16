@@ -194,6 +194,11 @@ Build and push the container image of Petclinic to the Docker Hub registry:
 mvn jib:build
 ```
 
+## Pushing nginx image to the Docker hub
+```
+docker image push waldara/nginx:1.24
+```
+
 
 ## Interesting Spring Petclinic forks
 
