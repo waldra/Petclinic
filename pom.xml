@@ -50,20 +50,19 @@
         <!-- Nexus Sever -->
         <distributionManagement>
             <repository>
-                <id>maven-releases</id>
-                <url>http://18.201.183.184:8081/repository/maven-releases/</url>
-            </repository>
-            <snapshotRepository>
-                <id>maven-snapshots</id>
-                <url>http://18.201.183.184:8081/repository/maven-releases/</url>
-            </snapshotRepository>
+		<id>maven-releases</id>
+		<url>http://18.201.183.184:8081/repository/maven-releases</url>
+	   </repository>
+	   <snapshotRepository>
+		<id>maven-snapshots</id>
+		<url>http://18.201.183.184:8081/repository/maven-releases</url>
+	   </snapshotRepository>
         </distributionManagement>
-        <!-- maven-release Repository -->
         <repository>
             <id>maven-releases</id>
-            <name>maven-releases</name>
-            <url>http://18.201.183.184:8081/repository/maven-releases/</url>
+	   <url>http://18.201.183.184:8081/repository/maven-releases</url>
         </repository>
+  
 
         <!-- Logging -->
         <slf4j.version>1.7.32</slf4j.version>
