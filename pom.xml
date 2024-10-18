@@ -46,35 +46,6 @@
         <hibernate-validator.version>6.2.0.Final</hibernate-validator.version>
         <hsqldb.version>2.5.2</hsqldb.version>
         <h2database.version>1.4.200</h2database.version>
-	<distributionManagement>
-  <repository>
-    <id>maven-releases</id>
-    <!-- CHANGE HERE by your team Nexus server -->
-    <url>http://13.126.124.159:8081/repository/maven-releases/</url>
-  </repository>
-  <snapshotRepository>
-    <id>maven-snapshots</id>
-    <!-- CHANGE HERE by your team Nexus server -->
-    <url>http://13.126.124.159:8081/repository/maven-releases/</url>
-  </snapshotRepository>
-</distributionManagement>
-
-        <!-- Nexus Sever -->
-        <distributionManagement>
-            <repository>
-		<id>maven-releases</id>
-		<url>http://18.201.183.184:8081/repository/maven-releases</url>
-	   </repository>
-	   <snapshotRepository>
-		<id>maven-snapshots</id>
-		<url>http://18.201.183.184:8081/repository/maven-releases</url>
-	   </snapshotRepository>
-        </distributionManagement>
-        <repository>
-            <id>maven-releases</id>
-	   <url>http://18.201.183.184:8081/repository/maven-releases</url>
-        </repository>
-  
 
         <!-- Logging -->
         <slf4j.version>1.7.32</slf4j.version>
@@ -110,7 +81,22 @@
         <docker.image.prefix>springcommunity</docker.image.prefix>
 
     </properties>
-
+	
+        <!-- Nexus Sever -->
+	<distributionManagement>
+		<repository>
+			<id>maven-releases</id>
+			<url>http://18.201.183.184:8081/repository/maven-releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>maven-snapshots</id>
+			<url>http://18.201.183.184:8081/repository/maven-releases</url>
+		</snapshotRepository>
+	</distributionManagement>
+    <repository>
+		<id>maven-releases</id>
+		<url>http://18.201.183.184:8081/repository/maven-releases</url>
+	</repository>
     <dependencyManagement>
         <dependencies>
             <dependency>
