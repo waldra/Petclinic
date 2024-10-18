@@ -83,20 +83,21 @@
     </properties>
 	
         <!-- Nexus Sever -->
-	<distributionManagement>
-		<repository>
-			<id>maven-releases</id>
-			<url>http://18.201.183.184:8081/repository/maven-releases</url>
-		</repository>
-		<snapshotRepository>
-			<id>maven-snapshots</id>
-			<url>http://18.201.183.184:8081/repository/maven-releases</url>
-		</snapshotRepository>
-	</distributionManagement>
+    <distributionManagement>
+        <repository>
+	    <id>maven-releases</id>
+	    <url>http://18.201.183.184:8081/repository/maven-releases</url>
+        </repository>
+	<snapshotRepository>
+	    <id>maven-snapshots</id>
+	    <url>http://18.201.183.184:8081/repository/maven-releases</url>
+	</snapshotRepository>
+    </distributionManagement>
     <repository>
-		<id>maven-releases</id>
-		<url>http://18.201.183.184:8081/repository/maven-releases</url>
-	</repository>
+        <id>maven-releases</id>
+	<url>http://18.201.183.184:8081/repository/maven-releases</url>
+    </repository>
+	
     <dependencyManagement>
         <dependencies>
             <dependency>
