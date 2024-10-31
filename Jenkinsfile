@@ -6,6 +6,7 @@ pipeline {
     }
 
     environment {
+        APP_HOME = /var/lib/jenkins/workspace/Petclinic@2
 
         APP_NAME   = "cart-app"
         IMAGE_NAME = "waldara"
@@ -19,7 +20,7 @@ pipeline {
                 cleanWs()
             }
         }
-        
+
         stage('Build') {
             agent { docker 'maven:3.8.6-openjdk-8' }
             steps {
@@ -31,6 +32,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
+                    cd ${APP_HOME}
                     docker.build("${IMAGE_NAME}/${APP_NAME}:${IMAGE_TAG}")
                 }
             }
