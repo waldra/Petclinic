@@ -6,7 +6,7 @@ pipeline {
     }
 
     environment {
-        APP_HOME = /var/lib/jenkins/workspace/Petclinic@2
+        APP_HOME = "/var/lib/jenkins/workspace/Petclinic@2"
 
         APP_NAME   = "cart-app"
         IMAGE_NAME = "waldara"
