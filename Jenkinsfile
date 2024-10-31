@@ -33,10 +33,10 @@ pipeline {
         stage('Code Quality Check') {
             steps {
                 withSonarQubeEnv('sonarqube-server') {
-                    sh ''' ${SCANNER_HOME}/bin/sonar-scanner
-                          -Dsonar.java.binaries=. \
-                          -Dsonar.projectKey=shopping-card \
-                          -Dsonar.projectName=shopping-card '''
+                    sh ''' ${SCANNER_HOME}/bin/sonar-scanner \
+                    -Dsonar.projectName=shopping-card \
+                    -Dsonar.projectKey=shopping-card \
+                    -Dsonar.java.binaries=. '''
                 }
             }
         }
