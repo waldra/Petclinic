@@ -7,6 +7,11 @@ pipeline {
 
     environment {
         SCANNER_HOME = tool 'sonar-scanner'
+
+        APP_NAME   = "cart-app"
+        IMAGE_NAME = "waldara"
+        IMAGE_TAG  = "1.0"
+
     }
     
     stages {
@@ -54,6 +59,14 @@ pipeline {
             steps {
                 git branch: 'main', url: 'https://github.com/waldra/shopping-cart.git'
                 sh 'mvn clean package -DskipTests=true'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    docker.build("${IMAGE_NAME}/${APP_NAME}:${IMAGE_TAG}")
+                }
             }
         }
     }
