@@ -32,7 +32,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    cd ${APP_HOME}
+                    cd "${APP_HOME}"
                     docker.build("${IMAGE_NAME}/${APP_NAME}:${IMAGE_TAG}")
                 }
             }
