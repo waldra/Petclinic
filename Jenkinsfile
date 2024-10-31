@@ -1,81 +1,54 @@
 pipeline {
-    agent any 
+    agent any
     
-    tools{
-        jdk 'jdk11'
+    tools {
         maven 'maven3'
     }
     
-    environment {
-        SCANNER_HOME=tool 'sonar-scanner'
-    }
-    
-    stages{
-        
-        stage("Git Checkout"){
-            steps{
-                git branch: 'main', changelog: false, poll: false, url: 'https://github.com/jaiswaladi246/Petclinic.git'
+    stages {
+        stage('Clean WorkSpace') {
+            steps {
+                cleanWs()
             }
         }
         
-        stage("Compile"){
-            steps{
-                sh "mvn clean compile"
+        stage('Git Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/waldra/shopping-cart.git'
+            }
+        }
+
+        stage('Compile') {
+            agent { docker 'maven:3.8.6-openjdk-8' }
+            steps {
+                git branch: 'main', url: 'https://github.com/waldra/shopping-cart.git'
+                sh 'mvn clean test'
             }
         }
         
-         stage("Test Cases"){
-            steps{
-                sh "mvn test"
-            }
-        }
-        
-        stage("Sonarqube Analysis "){
-            steps{
-                withSonarQubeEnv('sonar-server') {
-                    sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Petclinic \
-                    -Dsonar.java.binaries=. \
-                    -Dsonar.projectKey=Petclinic '''
-    
+        stage('Code Quality Check') {
+            steps {
+                withSonarQubeEnv('sonarqube-server') {
+                    sh ''' mvn clean package sonar:sonar 
+                          -Dsonar.projectKey=shopping-card \
+                          -Dsonar.projectName=shopping-card '''
                 }
             }
         }
         
-        stage("OWASP Dependency Check"){
-            steps{
-                dependencyCheck additionalArguments: '--scan ./ --format HTML ', odcInstallation: 'DP'
-                dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
-            }
-        }
-        
-         stage("Build"){
-            steps{
-                sh " mvn clean install"
-            }
-        }
-        
-        stage("Docker Build & Push"){
-            steps{
-                script{
-                   withDockerRegistry(credentialsId: '58be877c-9294-410e-98ee-6a959d73b352', toolName: 'docker') {
-                        
-                        sh "docker build -t image1 ."
-                        sh "docker tag image1 adijaiswal/pet-clinic123:latest "
-                        sh "docker push adijaiswal/pet-clinic123:latest "
-                    }
+        stage('Quality Gate Check') {
+            steps {
+                timeout(time: 2, unit: 'MINUTES') {
+                    waitForQualityGate abortPipeline: false, credentialsId: 'sonarqube-token'
                 }
             }
-        }
+        }    
         
-        stage("TRIVY"){
-            steps{
-                sh " trivy image adijaiswal/pet-clinic123:latest"
-            }
-        }
-        
-        stage("Deploy To Tomcat"){
-            steps{
-                sh "cp  /var/lib/jenkins/workspace/CI-CD/target/petclinic.war /opt/apache-tomcat-9.0.65/webapps/ "
+        stage('Build') {
+            agent { docker 'maven:3.8.6-openjdk-8' }
+            steps {
+                git branch: 'main', url: 'https://github.com/waldra/shopping-cart.git'
+                sh 'mvn clean package -DskipTests=true'
             }
         }
     }
