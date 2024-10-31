@@ -4,6 +4,10 @@ pipeline {
     tools {
         maven 'maven3'
     }
+
+    environment {
+        SCANNER_HOME = tool 'sonar-scanner'
+    }
     
     stages {
         stage('Clean WorkSpace') {
@@ -29,7 +33,8 @@ pipeline {
         stage('Code Quality Check') {
             steps {
                 withSonarQubeEnv('sonarqube-server') {
-                    sh ''' mvn clean package sonar:sonar 
+                    sh ''' ${SCANNER_HOME}/bin/sonar-scanner
+                          -Dsonar.java.binaries=. \
                           -Dsonar.projectKey=shopping-card \
                           -Dsonar.projectName=shopping-card '''
                 }
